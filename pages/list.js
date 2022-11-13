@@ -75,7 +75,7 @@ const List = () => {
                     </div>
                     <div className="flex flex-col justify-center items-center">
                         <p className="text-xl py-5">You have no listeners, create one!</p>
-                        <a href="/"><button className='p-2 border-solid border-2 rounded-md focus:ring hover:bg-slate-200'>Create a new listener</button></a>
+                        <Link href="/"><a><button className='p-2 border-solid border-2 rounded-md focus:ring hover:bg-slate-200'>Create a new listener</button></a></Link>
                     </div>
                 </div>
                 </AppContainer>
@@ -142,7 +142,7 @@ const List = () => {
                                         <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 md:pl-0">{listener.event.name}</td>
                                         <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 md:pl-0">{listener.contract}</td>
                                         <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 md:pl-0">{listener.url}</td>
-                                        <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 md:pl-0"><a href="/"><PencilSquareIcon className="h-4"></PencilSquareIcon></a></td>
+                                        <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 md:pl-0"><Link href="/"><a><PencilSquareIcon className="h-4"></PencilSquareIcon></a></Link></td>
                                         <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 md:pl-0"><div className="cursor-pointer" onClick={(e)=>deleteListener(listener)}><TrashIcon className="h-4"></TrashIcon></div></td>
                                     </tr>
                                 )
