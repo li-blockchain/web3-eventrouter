@@ -12,7 +12,7 @@ const UserButton = () => {
     // If the user is logged in, display a log out button.
     if(user) {
         return (
-            <button className='p-5 m-3 border-solid border-2' onClick={() => signOut(auth)}>Log Out</button>
+            <button className='p-2 border-solid border-2 rounded-md' onClick={() => signOut(auth)}>Log Out</button>
         )
     }
 }
