@@ -5,6 +5,7 @@ import app from '../../firebase/clientApp';
 import { getAuth } from 'firebase/auth';
 import { useRouter } from 'next/router';
 import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import Link from 'next/link';
 
 
 export default function Login() {
@@ -31,7 +32,12 @@ export default function Login() {
     return (
         <div className="grid h-screen place-items-center bg-slate-200">
             <div className="grid w-1/2 p-10 bg-white rounded-lg shadow-xl">
-                <h1 className="text-3xl font-bold">Login</h1>
+                <img
+                      className="h-10 w-auto"
+                      src="/logo.png"
+                      alt="Crypto Creator Kit"
+                    />
+                <h1 className="text-3xl py-2 font-bold">Login</h1>
                 <div className="p-3">
                     <input className="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal" type="text" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
                 </div>
@@ -42,7 +48,7 @@ export default function Login() {
                     <button onClick={() => signInWithEmailAndPassword(email, password)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">Login</button>
                 </div>
                 <div>
-                    New Here? <a href="/user/new">Create an account</a>
+                    New Here? <Link href="/user/new"><a className="text-blue-600">Create an account</a></Link>
                 </div>
             </div>        
         </div>

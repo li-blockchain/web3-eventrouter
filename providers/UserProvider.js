@@ -24,10 +24,10 @@ export const UserProvider = ({ children }) => {
   }, [loading]);
 
   useEffect(() => {
-    if (!user) {
+    if (!user && !loading) {
       router.push('/user');
     }
-  }, [user]);
+  }, [user, loading]);
 
   return (
     <UserContext.Provider value={{ user, loading, error }}>
