@@ -3,12 +3,15 @@ import { Dialog, Transition } from '@headlessui/react'
 import {
   Bars3BottomLeftIcon,
   BellIcon,
+  ChartBarIcon,
   XMarkIcon,
 } from '@heroicons/react/24/outline'
 import UserButton from './UserButton'
+import { useRouter } from 'next/router'
 
 const navigation = [
   { name: 'Contract Listeners', href: '/list', icon: BellIcon, current: true },
+  { name: 'Validator Performance', href: '/validators', icon: ChartBarIcon, current: false },
   // { name: 'Account Listeners', href: '#', icon: UserIcon, current: false },
 ]
 
@@ -18,6 +21,16 @@ function classNames(...classes) {
 
 export default function AppContainer({title, children}) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const router = useRouter();
+
+  // Set the current page to active in the sidebar
+  navigation.forEach(item => {
+    if (item.href === router.pathname) {
+      item.current = true;
+    } else {
+      item.current = false;
+    }
+  });
 
   return (
     <>
