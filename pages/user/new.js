@@ -5,6 +5,8 @@ import app from '../../firebase/clientApp';
 import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
 import { useRouter } from 'next/router';
 import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 export default function Login() {
@@ -20,13 +22,19 @@ export default function Login() {
         }
     }, [user, loading]);
 
-    if(error) {
-        console.log(error);
-    }
+    useEffect(() => {
+        if(error) {
+            // If the message contains "invalid-email"
+            if(error.message.includes('invalid-email')) {
+                toast.error('Please enter a valid email address');
+            }
+        }
+    }, [error]);
 
     if(loading) {
         console.log('loading');
     }
+
 
     return (
         <div className="grid h-screen place-items-center bg-slate-200">
@@ -46,7 +54,11 @@ export default function Login() {
                 <div className="p-3">
                     <button onClick={() => createUserWithEmailAndPassword(email, password)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">Create User</button>
                 </div>
-            </div>        
+                <div className="p-3">
+                 Already have an account? Log in <a href="/user" className="text-blue-500 hover:text-blue-800">here</a>
+                </div>
+            </div>
+            <ToastContainer />       
         </div>
     )
 
