@@ -6,6 +6,7 @@ import { UserProvider } from '../providers/UserProvider';
 import { getAuth } from 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import AppContainer from '../components/AppContainer';
+import Datepicker from "react-tailwindcss-datepicker"; 
 
 import {
     BellIcon, ChartBarIcon, PencilSquareIcon, PlusSmallIcon, TrashIcon,
@@ -40,11 +41,37 @@ const Validators = () => {
         return classes.filter(Boolean).join(' ')
     }
 
+    const thirtyDaysAgo = new Date();
+    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+    const [dateRange, setDateRange] = useState({ 
+        startDate: thirtyDaysAgo, 
+        endDate: new Date()
+    }); 
+        
+    const handleDateChange = (newDateRange) => {
+        console.log("newValue:", newDateRange); 
+        setDateRange(
+            {
+                startDate: new Date(newDateRange.startDate),
+                endDate: new Date(newDateRange.endDate)
+            }
+        );
+    }
+
     useEffect(() => {
         if(user) {
             async function fetchData() {
-                 // Call API endpoint at /api/getValidators to get all validators
-                const validators = await fetch('/api/getValidators', {
+                // Convert dateRange to unix timestamp
+                const startDatetime = Math.floor(dateRange.startDate.getTime() / 1000);  
+                const endDatetime = Math.floor(dateRange.endDate.getTime() / 1000); 
+
+                console.log(dateRange.endDate)
+                const url = `/api/getValidators?startDatetime=${startDatetime}&endDatetime=${endDatetime}`;
+
+                console.log("url:", url);
+
+                 // Call API endpoint at /api/getValidators to get all validators.
+                const validators = await fetch(url, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json'
@@ -66,8 +93,8 @@ const Validators = () => {
                 validatorsArray.forEach(validator => {
                     // Get the total rewards for this validator
                     totalWithdrawals += validator?.withdrawals;
-                    if(validator?.proposed) {
-                        totalProposals += validator.proposed;
+                    if(validator?.proposals) {
+                        totalProposals += validator.proposals;
                     }
 
                 });
@@ -86,7 +113,9 @@ const Validators = () => {
            
         }
 
-    }, [user]);
+    }, [user, dateRange]);
+
+    
 
     // Prevent flast of app. Must be a better way.
     if(!user) {
@@ -102,15 +131,17 @@ const Validators = () => {
                     {/* Secondary navigation */}
                     <header className="pb-4 pt-6 sm:pb-6">
                         <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-6 px-4 sm:flex-nowrap sm:px-6 lg:px-8">
-                        <h1 className="text-base font-semibold leading-7 text-gray-900">Rewards</h1>
+                        <h1 className="text-base font-semibold leading-7 text-gray-900">Rewards by date:</h1>
                         <div className="order-last flex w-full gap-x-8 text-sm font-semibold leading-6 sm:order-none sm:w-auto sm:border-l sm:border-gray-200 sm:pl-6 sm:leading-7">
-                            {secondaryNavigation.map((item) => (
-                            <a key={item.name} href={item.href} className={item.current ? 'text-indigo-600' : 'text-gray-700'}>
-                                {item.name}
-                            </a>
-                            ))}
+                        <Datepicker
+                            primaryColor={"purple"}  
+                            value={dateRange} 
+                            onChange={handleDateChange} 
+                            displayFormat={"MM/DD/YYYY"} 
+                        /> 
                         </div>
                         </div>
+                       
                     </header>
                     <div className="relative isolate overflow-hidden pt-16">
                      {/* Stats */}
@@ -170,7 +201,7 @@ const Validators = () => {
                                 <tr key={validator.validatorIndex}>
                                     <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0"><a href={`https://beaconcha.in/validator/${validator.validatorIndex}`}>{validator.validatorIndex}</a></td>
                                     <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">Ξ {parseFloat(ethers.formatUnits(validator.withdrawals,9)).toFixed(4)}</td>
-                                    <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">{validator?.proposed && "Ξ " + parseFloat(ethers.formatUnits(validator?.proposed.toString(), 18)).toFixed(4)}</td>
+                                    <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">{validator?.proposals && "Ξ " + parseFloat(ethers.formatUnits(validator?.proposals.toString(), 18)).toFixed(4)}</td>
                                 </tr>
                             ))}
                         </tbody>
