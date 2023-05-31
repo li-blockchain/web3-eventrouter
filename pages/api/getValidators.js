@@ -6,7 +6,7 @@ import app from "../../firebase/clientApp";
 export default async function handler(req, res) {
     // Read from the firebase database
     const db = getFirestore(app);
-    const collRef = collection(db, "rewards_new");
+    const collRef = collection(db, process.env.REWARDS_COLLECTION);
 
     // Get from / to dates from the request
     const { startDatetime, endDatetime } = req.query;
@@ -44,7 +44,7 @@ export default async function handler(req, res) {
                     // Adding a validator and withdrawals
                     if (!validators[data.validator_index]) {
                         validators[data.validator_index] = {};
-                        validators[withdrawal.validator_index]['withdrawals'] = 0;
+                        validators[data.validator_index]['withdrawals'] = 0;
                         validators[data.validator_index]['proposals'] = parseInt(data.amount);
                     } else {
                         validators[data.validator_index]['proposals'] += parseInt(data.amount);
