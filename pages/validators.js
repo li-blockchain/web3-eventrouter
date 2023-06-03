@@ -192,6 +192,8 @@ const Validators = () => {
                         <thead>
                             <tr>
                                 <th className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Validator #</th>
+                                <th className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Type</th>
+                                <th className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Node</th>
                                 <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Withdrawals</th>
                                 <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Proposals</th>
                             </tr>
@@ -200,6 +202,8 @@ const Validators = () => {
                             {validators.map((validator) => (
                                 <tr key={validator.validatorIndex}>
                                     <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0"><a href={`https://beaconcha.in/validator/${validator.validatorIndex}`}>{validator.validatorIndex}</a></td>
+                                    <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">Ξ {validator.type}</td>
+                                    <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">{validator.node}</td>
                                     <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">Ξ {parseFloat(ethers.formatUnits(validator.withdrawals,9)).toFixed(4)}</td>
                                     <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">{validator?.proposals && "Ξ " + parseFloat(ethers.formatUnits(validator?.proposals.toString(), 18)).toFixed(4)}</td>
                                 </tr>

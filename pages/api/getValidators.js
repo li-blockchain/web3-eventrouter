@@ -32,6 +32,8 @@ export default async function handler(req, res) {
                     if (!validators[withdrawal.validator_index]) {
                         validators[withdrawal.validator_index] = {};
                         validators[withdrawal.validator_index]['withdrawals'] = withdrawal.amount;
+                        validators[withdrawal.validator_index]['type'] = withdrawal.type;
+                        validators[withdrawal.validator_index]['node'] = withdrawal.node;
                         validators[withdrawal.validator_index]['proposals'] = 0;
                     } else {
                         validators[withdrawal.validator_index]['withdrawals'] += withdrawal.amount;
@@ -46,6 +48,8 @@ export default async function handler(req, res) {
                         validators[data.validator_index] = {};
                         validators[data.validator_index]['withdrawals'] = 0;
                         validators[data.validator_index]['proposals'] = parseInt(data.amount);
+                        validators[data.validator_index]['type'] = data.type; 
+                        validators[data.validator_index]['node'] = data.node; 
                     } else {
                         validators[data.validator_index]['proposals'] += parseInt(data.amount);
                     }
