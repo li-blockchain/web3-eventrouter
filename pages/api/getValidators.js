@@ -3,6 +3,29 @@
 import { collection, getDocs, getFirestore, query } from "firebase/firestore";
 import app from "../../firebase/clientApp";
 
+
+// Adjust the reward based on the type of validator. 
+// Probably a better way to do this, but this works for now.
+// For example calling into the protocol to get the commissions.
+const adjustReward = (amount, type) => {
+
+    //LEB8
+    if(type < 15 && type >= 8) {
+        // We have a 14% validator. Make sure we are returning an integer.
+        return Math.floor((amount / 4) * 0.86);
+    }
+
+    // LEB16
+    if(type < 17 && type >= 16) {
+        // We have a 15% validator.
+        return Math.floor((amount / 2) * 0.85);
+    }
+
+    // Solo
+    return amount;
+}
+
+
 export default async function handler(req, res) {
     // Read from the firebase database
     const db = getFirestore(app);
@@ -31,12 +54,12 @@ export default async function handler(req, res) {
                     // Adding a validator and withdrawals
                     if (!validators[withdrawal.validator_index]) {
                         validators[withdrawal.validator_index] = {};
-                        validators[withdrawal.validator_index]['withdrawals'] = withdrawal.amount;
-                        validators[withdrawal.validator_index]['type'] = withdrawal.type;
+                        validators[withdrawal.validator_index]['withdrawals'] = adjustReward(withdrawal.amount, withdrawal.type);
+                        validators[withdrawal.validator_index]['type'] = Math.floor(withdrawal.type);
                         validators[withdrawal.validator_index]['node'] = withdrawal.node;
                         validators[withdrawal.validator_index]['proposals'] = 0;
                     } else {
-                        validators[withdrawal.validator_index]['withdrawals'] += withdrawal.amount;
+                        validators[withdrawal.validator_index]['withdrawals'] += adjustReward(withdrawal.amount, withdrawal.type);
                     }
                 }
             });
@@ -47,11 +70,11 @@ export default async function handler(req, res) {
                     if (!validators[data.validator_index]) {
                         validators[data.validator_index] = {};
                         validators[data.validator_index]['withdrawals'] = 0;
-                        validators[data.validator_index]['proposals'] = parseInt(data.amount);
-                        validators[data.validator_index]['type'] = data.type; 
+                        validators[data.validator_index]['proposals'] = adjustReward(parseInt(data.amount), data.type);
+                        validators[data.validator_index]['type'] = Math.floor(data.type); 
                         validators[data.validator_index]['node'] = data.node; 
                     } else {
-                        validators[data.validator_index]['proposals'] += parseInt(data.amount);
+                        validators[data.validator_index]['proposals'] += adjustReward(parseInt(data.amount), data.type);
                     }
                 }
             });
