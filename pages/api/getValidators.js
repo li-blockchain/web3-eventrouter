@@ -9,16 +9,20 @@ import app from "../../firebase/clientApp";
 // For example calling into the protocol to get the commissions.
 const adjustReward = (amount, type) => {
 
-    //LEB8
+    // //LEB8
     if(type < 15 && type >= 8) {
         // We have a 14% validator. Make sure we are returning an integer.
-        return Math.floor((amount / 4) * 1.14);
+        const bonded = Math.floor(amount / 4);
+        const borrowed =  amount - bonded;
+        return bonded + Math.floor(borrowed * 0.14);
     }
 
     // LEB16
     if(type < 17 && type >= 16) {
         // We have a 15% validator.
-        return Math.floor((amount / 2) * 1.15);
+        const bonded = Math.floor(amount / 2);
+        const borrowed =  amount - bonded;
+        return bonded + Math.floor(borrowed * 0.15);
     }
 
     // Solo
