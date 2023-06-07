@@ -47,25 +47,33 @@ const Validators = () => {
         startDate: thirtyDaysAgo, 
         endDate: new Date()
     }); 
-        
+
     const handleDateChange = (newDateRange) => {
-        console.log("newValue:", newDateRange); 
-        setDateRange(
-            {
-                startDate: new Date(newDateRange.startDate),
-                endDate: new Date(newDateRange.endDate)
-            }
-        );
-    }
+        const startDate = new Date(newDateRange.startDate);
+        const endDate = new Date(newDateRange.endDate);
+    
+        // Adjust the selected dates to the local time zone
+        const timezoneOffset = startDate.getTimezoneOffset() * 60000;
+        const localStartDate = new Date(startDate.getTime() + timezoneOffset);
+        const localEndDate = new Date(endDate.getTime() + timezoneOffset);
+    
+        setDateRange({
+            startDate: localStartDate,
+            endDate: localEndDate
+        });
+    };
+    
 
     useEffect(() => {
         if(user) {
             async function fetchData() {
-                // Convert dateRange to unix timestamp
-                const startDatetime = Math.floor(dateRange.startDate.getTime() / 1000);  
-                const endDatetime = Math.floor(dateRange.endDate.getTime() / 1000); 
+                const localStartDate = new Date(dateRange.startDate.getTime() - dateRange.startDate.getTimezoneOffset() * 60000);
+                const localEndDate = new Date(dateRange.endDate.getTime() - dateRange.endDate.getTimezoneOffset() * 60000);
+    
+                // Convert dateRange to Unix timestamp adjusted to local time zone
+                const startDatetime = Math.floor(localStartDate.getTime() / 1000);
+                const endDatetime = Math.floor(localEndDate.getTime() / 1000) + 86399;
 
-                console.log(dateRange.endDate)
                 const url = `/api/getValidators?startDatetime=${startDatetime}&endDatetime=${endDatetime}`;
 
                 console.log("url:", url);
