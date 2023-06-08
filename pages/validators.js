@@ -113,9 +113,9 @@ const Validators = () => {
                 totalWithdrawals = ethers.formatUnits(totalWithdrawals,9);
                 totalProposals = ethers.formatUnits(totalProposals.toString(),18);
 
-                setTotalWithdrawals("Ξ " + parseFloat(totalWithdrawals).toFixed(4));
-                setTotalProposals("Ξ " + parseFloat(totalProposals).toFixed(4));
-                setTotalRewards("Ξ " + (parseFloat(totalWithdrawals) + parseFloat(totalProposals)).toFixed(4))
+                setTotalWithdrawals(parseFloat(totalWithdrawals).toFixed(4));
+                setTotalProposals(parseFloat(totalProposals).toFixed(4));
+                setTotalRewards((parseFloat(totalWithdrawals) + parseFloat(totalProposals)).toFixed(4))
 
 
                 setValidators(validatorsArray);
@@ -141,19 +141,24 @@ const Validators = () => {
                 <div>
                     <h2 className='text-3xl py-5 flex'>Validator Performance<ChartBarIcon className='h-6 ml-2 mt-2 text-slate-800'></ChartBarIcon></h2>
                     {/* Secondary navigation */}
-                    <header className="pb-4 pt-6 sm:pb-6">
-                        <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-6 px-4 sm:flex-nowrap sm:px-6 lg:px-8">
-                        <h1 className="text-base font-semibold leading-7 text-gray-900">Rewards by date:</h1>
-                        <div className="order-last flex w-full gap-x-8 text-sm font-semibold leading-6 sm:order-none sm:w-auto sm:border-l sm:border-gray-200 sm:pl-6 sm:leading-7">
-                        <Datepicker
-                            primaryColor={"purple"}  
-                            value={dateRange} 
-                            onChange={handleDateChange} 
-                            displayFormat={"MM/DD/YYYY"} 
-                        /> 
+                    <header className="pb-4 pt-6 sm:pb-6 flex justify-between">
+                        <div className="flex max-w-7xl flex-wrap items-center gap-6 px-4 sm:flex-nowrap sm:px-6 lg:px-8">
+                            <h2 className="text-base font-semibold leading-7 text-gray-900">Rewards by date:</h2>
+                            <div className="order-last flex w-full gap-x-8 text-sm font-semibold leading-6 sm:order-none sm:w-auto sm:border-l sm:border-gray-200 sm:pl-6 sm:leading-7">
+                                <Datepicker
+                                    primaryColor={"purple"}  
+                                    value={dateRange} 
+                                    onChange={handleDateChange} 
+                                    displayFormat={"MM/DD/YYYY"} 
+                                /> 
+                            </div>
                         </div>
+                        <div className="flex px-8">
+                            <h2 className="text-base font-semibold leading-7 text-gray-900 px-5">Values in </h2>
+                            <div className="order-last flex w-full gap-x-8 text-sm font-semibold leading-6 sm:order-none sm:w-auto sm:border-l sm:border-gray-200 sm:pl-6 sm:leading-7">
+                                Ξ    
+                            </div>
                         </div>
-                       
                     </header>
                     <div className="relative isolate overflow-hidden pt-16">
                      {/* Stats */}
@@ -224,8 +229,8 @@ const Validators = () => {
                                     <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0"><a href={`https://beaconcha.in/validator/${validator.validatorIndex}`}>{validator.validatorIndex}</a></td>
                                     <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">Ξ {validator.type}</td>
                                     <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">{validator.node}</td>
-                                    <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">Ξ {parseFloat(ethers.formatUnits(validator.withdrawals,9)).toFixed(4)}</td>
-                                    <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">{validator?.proposals && "Ξ " + parseFloat(ethers.formatUnits(validator?.proposals.toString(), 18)).toFixed(4)}</td>
+                                    <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">{parseFloat(ethers.formatUnits(validator.withdrawals,9)).toFixed(4)}</td>
+                                    <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">{validator?.proposals && parseFloat(ethers.formatUnits(validator?.proposals.toString(), 18)).toFixed(4)}</td>
                                 </tr>
                             ))}
                         </tbody>
