@@ -1,12 +1,13 @@
 // Component to list users listeners.
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import app from '../firebase/clientApp';
 import { UserProvider } from '../providers/UserProvider';
 import { getAuth } from 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import AppContainer from '../components/AppContainer';
-import Datepicker from "react-tailwindcss-datepicker"; 
+import Datepicker from "react-tailwindcss-datepicker";
+import { DownloadTableExcel } from 'react-export-table-to-excel';
 
 import {
     BellIcon, ChartBarIcon, PencilSquareIcon, PlusSmallIcon, TrashIcon,
@@ -23,6 +24,8 @@ const Validators = () => {
     const [totalRPL, setTotalRPL] = useState(0);
     const [totalRewards, setTotalRewards] = useState(0);
     const [isLoading, setLoading] = useState(true);
+
+    const tableRef = useRef(null);
 
     const secondaryNavigation = [
         { name: 'Current Cycle', href: '#', current: true },
@@ -90,7 +93,7 @@ const Validators = () => {
             }
 
             fetchData().then(data => {
-                var validatorsArray = Object.entries(data).map(([validatorIndex, validator]) => ({
+                var validatorsArray = Object.entries(data.validators).map(([validatorIndex, validator]) => ({
                     validatorIndex,
                     ...validator
                 }));
@@ -116,6 +119,7 @@ const Validators = () => {
 
 
                 setValidators(validatorsArray);
+                setTotalRPL(parseFloat(data.rpl).toFixed(4));
                 setLoading(false);
             });
            
@@ -195,8 +199,16 @@ const Validators = () => {
                     
                     
                     {/* Loop through all validators and display their performance */}
+                    <div class="flex flex-row justify-between">
                     <h2 className="mx-auto max-w-2xl text-base font-semibold leading-6 text-gray-900 lg:mx-0 lg:max-w-none pt-10 pb-5">Validator Breakdown</h2>
-                    <table className="min-w-full divide-y divide-gray-300">
+                    <DownloadTableExcel
+                        filename="validator_rewards"
+                        sheet="rewards"
+                        currentTableRef={tableRef.current}>
+                        <button className="mx-auto max-w-2xl text-base leading-6 text-gray-900 lg:mx-0 lg:max-w-none mt-5 p-2 border-solid rounded-md border-2"> Export excel </button>
+                    </DownloadTableExcel>
+                    </div>
+                    <table className="min-w-full divide-y divide-gray-300" ref={tableRef}>
                         <thead>
                             <tr>
                                 <th className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Validator #</th>
