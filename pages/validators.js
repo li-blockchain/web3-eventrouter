@@ -199,7 +199,7 @@ const Validators = () => {
                     
                     
                     {/* Loop through all validators and display their performance */}
-                    <div class="flex flex-row justify-between">
+                    <div className="flex flex-row justify-between">
                     <h2 className="mx-auto max-w-2xl text-base font-semibold leading-6 text-gray-900 lg:mx-0 lg:max-w-none pt-10 pb-5">Validator Breakdown</h2>
                     <DownloadTableExcel
                         filename="validator_rewards"
