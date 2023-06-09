@@ -4,14 +4,16 @@ import {
   Bars3BottomLeftIcon,
   BellIcon,
   ChartBarIcon,
+  CpuChipIcon,
   XMarkIcon,
 } from '@heroicons/react/24/outline'
 import UserButton from './UserButton'
 import { useRouter } from 'next/router'
 
 const navigation = [
-  { name: 'Contract Listeners', href: '/list', icon: BellIcon, current: true },
-  { name: 'Validator Performance', href: '/validators', icon: ChartBarIcon, current: false },
+  { name: 'Validator Performance', href: '/', icon: ChartBarIcon, current: false },
+  // { name: 'Nodes', href: '/nodes', icon: CpuChipIcon, current: false },
+  // { name: 'Contract Listeners', href: '/list', icon: BellIcon, current: true },
   // { name: 'Account Listeners', href: '#', icon: UserIcon, current: false },
 ]
 
