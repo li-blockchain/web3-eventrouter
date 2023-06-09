@@ -55,9 +55,9 @@ export default function Login() {
                 <div className="p-3">
                     <button onClick={() => createUserWithEmailAndPassword(email, password)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">Create User</button>
                 </div>
-                {/* <div className="p-3">
+                <div className="p-3">
                  Already have an account? Log in <Link href="/user"><a className="text-blue-500 hover:text-blue-800">here</a></Link>
-                </div> */}
+                </div>
             </div>
             <ToastContainer />       
         </div>
