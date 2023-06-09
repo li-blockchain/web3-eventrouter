@@ -10,7 +10,7 @@ import Datepicker from "react-tailwindcss-datepicker";
 import { DownloadTableExcel } from 'react-export-table-to-excel';
 
 import {
-    BellIcon, ChartBarIcon, PencilSquareIcon, PlusSmallIcon, TrashIcon,
+   ChartBarIcon
   } from '@heroicons/react/24/outline'
 import { ethers } from 'ethers';
 
@@ -45,7 +45,7 @@ const Validators = () => {
     }
 
     const thirtyDaysAgo = new Date();
-    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 28);
     const [dateRange, setDateRange] = useState({ 
         startDate: thirtyDaysAgo, 
         endDate: new Date()
