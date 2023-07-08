@@ -13,6 +13,7 @@ import {
    ChartBarIcon
   } from '@heroicons/react/24/outline'
 import { ethers } from 'ethers';
+import { useRouter } from 'next/router';
 
 const Validators = () => {
     const [ user ] = useAuthState(getAuth(app));
@@ -26,6 +27,8 @@ const Validators = () => {
     const [isLoading, setLoading] = useState(true);
 
     const tableRef = useRef(null);
+
+    const router  = useRouter();
 
     const secondaryNavigation = [
         { name: 'Current Cycle', href: '#', current: true },
@@ -65,7 +68,22 @@ const Validators = () => {
             endDate: localEndDate
         });
     };
-    
+
+    const exportDetails = () => {
+        const localStartDate = new Date(dateRange.startDate.getTime() - dateRange.startDate.getTimezoneOffset() * 60000);
+        const localEndDate = new Date(dateRange.endDate.getTime() - dateRange.endDate.getTimezoneOffset() * 60000);
+
+        // Convert dateRange to Unix timestamp adjusted to local time zone
+        const startDatetime = Math.floor(localStartDate.getTime() / 1000);
+        const endDatetime = Math.floor(localEndDate.getTime() / 1000) + 86399;
+
+        // Hit the getDetails api endpoint.
+        const url = `/api/getDetails?startDatetime=${startDatetime}&endDatetime=${endDatetime}`;
+
+        // Redirect to the url
+        router.push(url);
+
+    }
 
     useEffect(() => {
         if(user) {
@@ -206,12 +224,17 @@ const Validators = () => {
                     {/* Loop through all validators and display their performance */}
                     <div className="flex flex-row justify-between">
                     <h2 className="mx-auto max-w-2xl text-base font-semibold leading-6 text-gray-900 lg:mx-0 lg:max-w-none pt-10 pb-5">Validator Breakdown</h2>
-                    <DownloadTableExcel
-                        filename="validator_rewards"
-                        sheet="rewards"
-                        currentTableRef={tableRef.current}>
-                        <button className="mx-auto max-w-2xl text-base leading-6 text-gray-900 lg:mx-0 lg:max-w-none mt-5 p-2 border-solid rounded-md border-2"> Export excel </button>
-                    </DownloadTableExcel>
+                    <div className="flex flex-row justify-right">
+                        <DownloadTableExcel
+                            filename="validator_rewards"
+                            sheet="rewards"
+                            currentTableRef={tableRef.current}>
+                            <button className="mx-auto max-w-2xl text-base leading-6 text-gray-900 lg:mx-0 lg:max-w-none mt-5 p-2 border-solid rounded-md border-2"> Export Summary Report </button>
+                        </DownloadTableExcel>
+                        <span className='pl-5'>
+                            <button className='mx-auto max-w-2xl text-base leading-6 text-gray-900 lg:mx-0 lg:max-w-none mt-5 p-2 border-solid rounded-md border-2' onClick={() => exportDetails()}>Export Detail Report</button>
+                        </span>
+                    </div>
                     </div>
                     <table className="min-w-full divide-y divide-gray-300" ref={tableRef}>
                         <thead>
