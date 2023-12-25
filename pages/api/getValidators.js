@@ -70,7 +70,7 @@ export default async function handler(req, res) {
         }
 
         for (const data of reward.proposals) {
-            if (data.datetime >= startDatetime && data.datetime <= endDatetime) {
+            if (data && data.datetime >= startDatetime && data.datetime <= endDatetime) {
                 // Adding a validator and withdrawals
                 if (!validators[data.validator_index]) {
                     validators[data.validator_index] = {};
