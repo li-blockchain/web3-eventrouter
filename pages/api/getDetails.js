@@ -102,18 +102,18 @@ export default async function handler(req, res) {
     for (const reward of rewards) {
         // We are going to build an array that we will export as a csv.
         for(const withdrawal of reward.withdrawals) {
-            if (withdrawal.datetime >= startDatetime && withdrawal.datetime <= endDatetime) {
+            if (withdrawal?.datetime && withdrawal.datetime >= startDatetime && withdrawal.datetime <= endDatetime) {
                data.push(formatData(withdrawal, 'withdrawal'));
             }
         }
-
+    
         for (const proposal of reward.proposals) {
-            if (proposal.datetime >= startDatetime && proposal.datetime <= endDatetime) {
+            if (proposal?.datetime && proposal.datetime >= startDatetime && proposal.datetime <= endDatetime) {
                 data.push(formatData(proposal, 'proposal'));
             }
         }
     }
-
+    
     // format data array as a csv include headers
     data = data.map((row) => {
         return Object.values(row).join(',');
