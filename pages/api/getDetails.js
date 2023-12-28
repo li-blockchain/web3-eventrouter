@@ -9,7 +9,7 @@ import app from "../../firebase/clientApp";
 const adjustReward = (amount, type) => {
 
     // //LEB8
-    if(type < 15 && type >= 8) {
+    if(type < 15) {
         // We have a 14% validator. Make sure we are returning an integer.
         const bonded = Math.floor(amount / 4);
         const borrowed =  amount - bonded;
