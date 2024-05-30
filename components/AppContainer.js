@@ -4,14 +4,18 @@ import {
   Bars3BottomLeftIcon,
   BellIcon,
   ChartBarIcon,
-  CpuChipIcon,
+  RocketLaunchIcon,
   XMarkIcon,
+  BanknotesIcon,
+  ExclamationTriangleIcon
 } from '@heroicons/react/24/outline'
 import UserButton from './UserButton'
 import { useRouter } from 'next/router'
 
 const navigation = [
   { name: 'Validator Performance', href: '/', icon: ChartBarIcon, current: false },
+  // { name: 'Rocketpool Balances', href: '/balances', icon: RocketLaunchIcon, current: false },
+  { name: 'Solo Voluntary Exit', href: '/exit', icon: ExclamationTriangleIcon, current: false },
   // { name: 'Nodes', href: '/nodes', icon: CpuChipIcon, current: false },
   // { name: 'Contract Listeners', href: '/list', icon: BellIcon, current: true },
   // { name: 'Account Listeners', href: '#', icon: UserIcon, current: false },
@@ -21,7 +25,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function AppContainer({title, children}) {
+export default function AppContainer({ title, children }) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const router = useRouter();
 
@@ -115,7 +119,7 @@ export default function AppContainer({title, children}) {
                     </nav>
                   </div>
                   <div className="flex flex-shrink-0 border-t border-gray-200 p-4">
-                    <UserButton/>
+                    <UserButton />
                   </div>
                 </Dialog.Panel>
               </Transition.Child>
@@ -161,7 +165,7 @@ export default function AppContainer({title, children}) {
               </nav>
             </div>
             <div className="flex flex-shrink-0 border-t border-gray-200 p-4">
-              <UserButton/>
+              <UserButton />
             </div>
           </div>
         </div>
@@ -183,7 +187,7 @@ export default function AppContainer({title, children}) {
                 <h1 className="text-2xl font-semibold text-gray-900">{title}</h1>
               </div>
               <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
-               {children}
+                {children}
               </div>
             </div>
           </main>
