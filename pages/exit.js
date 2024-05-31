@@ -144,7 +144,7 @@ function VoluntaryExit() {
         <div className="m-10 bg-white rounded-md p-10 shadow-md">
           <div>
             <h2 className='text-3xl py-5 flex'>Broadcast Voluntary Exits</h2>
-            <p>This will broadcast exit messages to the Ethereum network. You can see how long a wait there is for funds to release at the <a href="https://www.validatorqueue.com/" target="_blank"> this link.</a></p>
+            <p>This will broadcast exit messages to the Ethereum network. You can see how long a wait there is for funds to release at the <a href="https://www.validatorqueue.com/" target="_blank" rel="noreferrer"> this link.</a></p>
             <header className="pb-4 pt-6 sm:pb-6 flex justify-between">
               <div className="flex max-w-7xl flex-wrap items-center gap-6 px-4 sm:flex-nowrap sm:px-6 lg:px-8">
               </div>
