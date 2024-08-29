@@ -8,7 +8,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import AppContainer from '../components/AppContainer';
 import Datepicker from "react-tailwindcss-datepicker";
 import { DownloadTableExcel } from 'react-export-table-to-excel';
-import ScaleLoader from "react-spinners";
+import { ScaleLoader } from "react-spinners";
 
 import {
    ChartBarIcon
@@ -38,10 +38,10 @@ const Validators = () => {
     ]
 
     const stats = [
-        { name: 'Withdrawals', value: totalWithdrawals ? totalWithdrawals : <ScaleLoader/>, change: '', changeType: 'positive' },
-        { name: 'Block Rewards', value: totalProposals ? totalProposals : <ScaleLoader/>, change: '', changeType: 'negative' },
-        { name: 'RPL Rewards', value: totalRPL ? totalRPL : <ScaleLoader/>, change: '-', changeType: 'positive' },
-        { name: 'Total Rewards', value: totalRewards ? totalRewards : <ScaleLoader/>, change: '', changeType: 'negative' },
+        { name: 'Withdrawals', value: isLoading ? <ScaleLoader /> : totalWithdrawals, change: '', changeType: 'positive' },
+        { name: 'Block Rewards', value: isLoading ? <ScaleLoader /> : totalProposals, change: '', changeType: 'negative' },
+        { name: 'RPL Rewards', value: isLoading ? <ScaleLoader /> : totalRPL, change: '-', changeType: 'positive' },
+        { name: 'Total Rewards', value: isLoading ? <ScaleLoader /> : totalRewards, change: '', changeType: 'negative' },
     ]
 
     function classNames(...classes) {
