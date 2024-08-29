@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import AppContainer from '../components/AppContainer';
 import { UserProvider } from '../providers/UserProvider';
 import { WagmiProvider } from 'wagmi'
+import { config } from '../providers/config'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import NodeSummary from '../components/rpl/NodeSummary'
 import { RocketLaunchIcon } from '@heroicons/react/24/outline';
