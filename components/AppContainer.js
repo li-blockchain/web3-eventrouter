@@ -14,7 +14,7 @@ import { useRouter } from 'next/router'
 
 const navigation = [
   { name: 'Validator Performance', href: '/', icon: ChartBarIcon, current: false },
-  // { name: 'Rocketpool Balances', href: '/balances', icon: RocketLaunchIcon, current: false },
+  { name: 'Rocketpool Balances', href: '/balances', icon: RocketLaunchIcon, current: false },
   { name: 'Solo Voluntary Exit', href: '/exit', icon: ExclamationTriangleIcon, current: false },
   // { name: 'Nodes', href: '/nodes', icon: CpuChipIcon, current: false },
   // { name: 'Contract Listeners', href: '/list', icon: BellIcon, current: true },
